@@ -1,0 +1,241 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+
+<h:head>
+    <title>Agrawal Creations</title>
+    <script name="jquery/jquery.js" library="primefaces"></script>
+
+
+</h:head>
+<h:body>
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+        >
+<ui:define name="content">
+
+<h:form id="form1">
+    <p:growl id="messages" showDetail="true"/>
+    <p:panel header="Sale Item" style="width: 100%;">
+        <p:panelGrid columns="2">
+            <h:outputLabel for="date" value="Date: " />
+
+            <p:calendar value="#{inward.date}" required="true" requiredMessage="Date required"/>
+
+
+            <p:outputLabel for="vendor" value="Vendor: " />
+            <p:selectOneMenu id="vendor" value="#{inward.vendor}" style="width:125px" required="true">
+                <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItems value="#{inward.vendors}" />
+            </p:selectOneMenu>
+
+
+            <p:outputLabel for="design" value="Design: " />
+            <p:selectOneMenu id="design" value="#{inward.design}" style="width:125px" required="true">
+                <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItems value="#{inward.designs}" />
+            </p:selectOneMenu>
+
+
+            <p:outputLabel for="colour" value="Colour: " />
+            <p:selectOneMenu id="colour" value="#{inward.colour}" style="width:125px" required="true">
+                <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItems value="#{inward.colours}" />
+            </p:selectOneMenu>
+
+
+
+            <h:outputLabel for="size" value="Size: " />
+            <p:inputText value="#{inward.size}" required="true"/>
+
+            <h:outputLabel for="batchSize" value="Batch Size: " />
+            <p:inputText  value="#{inward.batchSize}" required="true">
+
+                <p:ajax event="keyup" listener="#{inward.getCalculatedQuantity}" update="quantity"/>
+            </p:inputText>
+            <h:outputLabel for="noOfBatch" value="No Of Batch: " >
+            </h:outputLabel>
+
+            <p:inputText  value="#{inward.noOfBatch}" required="true">
+                <p:ajax event="keyup" listener="#{inward.getCalculatedQuantity}" update="quantity"/>
+
+            </p:inputText>
+            <h:outputText value="Quantity: " />
+
+            <h:outputText id="quantity" value="#{inward.quantity}" />
+
+
+
+            <p:outputLabel for="warehouse" value="Warehouse: " />
+            <p:selectOneMenu id="warehouse" value="#{inward.warehouse}" style="width:125px" required="true">
+                <f:selectItem itemLabel="Select One" itemValue="" />
+                <f:selectItems value="#{inward.warehouses}" />
+            </p:selectOneMenu>
+
+
+            <f:facet name="footer">
+                <input type="hidden" name="isIn" value="out" />
+                <h:commandButton value="Add Item" action="#{inward.addAction}"/>
+            </f:facet>
+        </p:panelGrid>
+        <p:spacer height="30px;"/>
+        <p:dataTable value="#{inward.orderList}" var="o"  widgetVar="50" style="width: 60px;" editable="true">
+            <f:facet name="header">
+                Order List
+            </f:facet>
+            <p:ajax event="rowEdit" listener="#{inward.onEdit}" update=":form1:messages" />
+            <p:ajax event="rowEditCancel" listener="#{inward.onCancel}" update=":form1:messages" />
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Date" />
+                </f:facet>
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{o.day}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{o.date}" style="width:100%"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+
+
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Vendor" />
+                </f:facet>
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{o.vendor}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{o.vendor}" style="width:100%"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Design" />
+                </f:facet>
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{o.design}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{o.design}" style="width:100%"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Colour" />
+                </f:facet>
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{o.colour}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{o.colour}" style="width:100%"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Size" />
+                </f:facet>
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{o.size}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{o.size}" style="width:100%"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+
+
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Batch Size" />
+                </f:facet>
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{o.batchSize}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{o.batchSize}" style="width:100%"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="No Of Batch" />
+                </f:facet>
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{o.noOfBatch}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{o.noOfBatch}" style="width:100%"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Quantity" />
+                </f:facet>
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{o.quantity}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{o.quantity}" style="width:100%"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+
+
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Warehouse" />
+                </f:facet>
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{o.warehouse}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{o.warehouse}" style="width:100%"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+
+            <p:column headerText="Options" style="width:50px">
+                <p:rowEditor />
+            </p:column>
+        </p:dataTable>
+    </p:panel>
+</h:form>
+</ui:define>
+</ui:composition>
+
+</h:body>
+
+</html>

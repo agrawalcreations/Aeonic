@@ -1,0 +1,68 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+
+<h:head>
+    <title>Agrawal Creations</title>
+</h:head>
+<h:body>
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+        >
+<ui:define name="content">
+
+    <h:form id="form1">
+        <p:growl id="messages" showDetail="true"/>
+        <p:panel header="Design Manager" style="width: 100%;">
+            <p:panelGrid columns="2">
+
+                <h:outputLabel for="design" value="Design: " />
+                <p:inputText value="#{designMaster.design}" required="true"/>
+
+                <f:facet name="footer">
+                    <h:commandButton value="Add Item" action="#{designMaster.addAction}"/>
+                </f:facet>
+            </p:panelGrid>
+            <p:spacer height="30px;"/>
+            <p:dataTable value="#{designMaster.designList}" var="o"  widgetVar="50" style="width: 60px;" editable="true">
+                <f:facet name="header">
+                    Design List
+                </f:facet>
+                <p:ajax event="rowEdit" listener="#{designMaster.onEdit}" update=":form1:messages" />
+                <p:ajax event="rowEditCancel" listener="#{designMaster.onCancel}" update=":form1:messages" />
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Colour" />
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{o.design}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{o.design}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+
+
+                <p:column headerText="Options" style="width:50px">
+                    <p:rowEditor />
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+</ui:define>
+</ui:composition>
+
+</h:body>
+
+</html>

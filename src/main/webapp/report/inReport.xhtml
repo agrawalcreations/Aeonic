@@ -1,0 +1,191 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+<f:view>
+<h:head>
+    <title>Agrawal Creations</title>
+</h:head>
+<h:body>
+    <ui:composition template="/templates/layout.xhtml"
+                    xmlns="http://www.w3.org/1999/xhtml"
+                    xmlns:f="http://java.sun.com/jsf/core"
+                    xmlns:h="http://java.sun.com/jsf/html"
+                    xmlns:ui="http://java.sun.com/jsf/facelets"
+                    xmlns:p="http://primefaces.org/ui"
+            >
+        <ui:define name="content">
+
+
+        <h:form>
+
+
+
+            <p:dataTable id="tbl" var="o" value="#{dataExporterView.inwardItems}"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+                 paginator="true" rows="20" style="margin-bottom:20px">
+
+        <f:facet name="{Exporters}">
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/excel.png" width="24"/>
+                <p:dataExporter type="xls" target="tbl" fileName="inwardItems" />
+            </h:commandLink>
+
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/pdf.png" width="24"/>
+                <p:dataExporter type="pdf" target="tbl" fileName="inwardItems"/>
+            </h:commandLink>
+
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/csv.png" width="24"/>
+                <p:dataExporter type="csv" target="tbl" fileName="inwardItems" />
+            </h:commandLink>
+
+            <h:commandLink>
+                <p:graphicImage name="/demo/images/xml.png" width="24"/>
+                <p:dataExporter type="xml" target="tbl" fileName="inwardItems" />
+            </h:commandLink>
+        </f:facet>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Date" />
+                    </f:facet>
+                     
+                            <h:outputText value="#{o.day}" />
+                     
+                </p:column>
+
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Vendor" />
+                    </f:facet>
+                     
+                            <h:outputText value="#{o.vendor}" />
+                      
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Design" />
+                    </f:facet>
+
+                            <h:outputText value="#{o.design}" />
+                      
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Colour" />
+                    </f:facet>
+
+                            <h:outputText value="#{o.colour}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Size" />
+                    </f:facet>
+
+                            <h:outputText value="#{o.size}" />
+
+
+                </p:column>
+
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Batch Size" />
+                    </f:facet>
+                     
+                            <h:outputText value="#{o.batchSize}" />
+
+
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="No Of Batch" />
+                    </f:facet>
+                        <h:outputText value="#{o.noOfBatch}" />
+
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Quantity" />
+                    </f:facet>
+                            <h:outputText value="#{o.quantity}" />
+                           
+                </p:column>
+
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Warehouse" />
+                    </f:facet>
+
+                            <h:outputText value="#{o.warehouse}" />
+                </p:column>
+
+    </p:dataTable>
+
+    <h3>Export Page Data Only</h3>
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/excel.png" />
+        <p:dataExporter type="xls" target="tbl" fileName="inwardItems" pageOnly="true"/>
+    </h:commandLink>
+
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/pdf.png" />
+        <p:dataExporter type="pdf" target="tbl" fileName="inwardItems" pageOnly="true" />
+    </h:commandLink>
+
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/csv.png" />
+        <p:dataExporter type="csv" target="tbl" fileName="inwardItems" pageOnly="true" />
+    </h:commandLink>
+
+    <h:commandLink>
+        <p:graphicImage name="/demo/images/xml.png" />
+        <p:dataExporter type="xml" target="tbl" fileName="inwardItems" pageOnly="true" />
+    </h:commandLink>
+
+
+            <h:panelGrid columns="4">
+            <h:commandLink>
+                <h:outputText  value="PDF" />
+                <p:dataExporter type="pdf" target="tbl"  fileName="SevenWonders"/>
+            </h:commandLink>
+
+            <h:commandLink>
+                <h:outputText  value="XL" />
+                <p:dataExporter type="xls" target="tbl"  fileName="SevenWonders"/>
+            </h:commandLink>
+
+            <h:commandLink>
+                <h:outputText  value="XML" />
+                <p:dataExporter type="xml" target="tbl"  fileName="SevenWonders"/>
+            </h:commandLink>
+
+            <h:commandLink>
+                <h:outputText  value="CSV" />
+                <p:dataExporter type="csv" target="tbl"  fileName="SevenWonders"/>
+            </h:commandLink>
+        </h:panelGrid>
+
+</h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</f:view>
+</html>

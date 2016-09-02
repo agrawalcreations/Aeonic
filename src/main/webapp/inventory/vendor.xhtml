@@ -1,0 +1,87 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+
+<h:head>
+    <title>Agrawal Creations</title>
+</h:head>
+<h:body>
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+        >
+<ui:define name="content">
+
+    <h:form id="form1">
+        <p:growl id="messages" showDetail="true"/>
+        <p:panel header="Vendor Manager (Supplier)" style="width: 100%;">
+            <p:panelGrid columns="2">
+
+                <h:outputLabel for="vendor" value="Vendor: " />
+                <p:inputText value="#{vendorMaster.vendor}" required="true"/>
+
+
+
+                <h:outputLabel for="address" value="Address: " />
+                <p:inputTextarea value="#{vendorMaster.address}" />
+
+
+
+                <h:outputLabel for="phone" value="Phone: " />
+                <p:inputText value="#{vendorMaster.phone}" />
+
+
+
+                <h:outputLabel for="comment" value="Comment: " />
+                <p:inputTextarea value="#{vendorMaster.comment}" />
+
+
+
+
+                <f:facet name="footer">
+                    <input type="hidden" name="isSupplier" value="supplier" />
+                    <h:commandButton value="Add Item" action="#{vendorMaster.addAction}"/>
+                </f:facet>
+            </p:panelGrid>
+            <p:spacer height="30px;"/>
+            <p:dataTable value="#{vendorMaster.vendorList}" var="o"  widgetVar="50" style="width: 60px;" editable="true">
+                <f:facet name="header">
+                    Vendor List
+                </f:facet>
+                <p:ajax event="rowEdit" listener="#{vendorMaster.onEdit}" update=":form1:messages" />
+                <p:ajax event="rowEditCancel" listener="#{vendorMaster.onCancel}" update=":form1:messages" />
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Vendor" />
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{o.vendor}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{o.vendor}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+
+
+                <p:column headerText="Options" style="width:50px">
+                    <p:rowEditor />
+                </p:column>
+            </p:dataTable>
+        </p:panel>
+    </h:form>
+</ui:define>
+</ui:composition>
+
+</h:body>
+
+</html>
